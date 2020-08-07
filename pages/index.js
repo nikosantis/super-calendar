@@ -1,65 +1,75 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Page from '../components/page'
+import Calendar from '../components/calendar'
+import useMounted from '../components/use-mounted'
+import Footer from '../components/footer'
 
-export default function Home() {
+export default function Home () {
+  const mounted = useMounted()
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+    <Page>
+      <div className='container'>
+        <Head>
+          <title>Super Calendar</title>
+          <link rel='icon' href='/favicon.ico' />
+        </Head>
+        <div className='row'>
+          <div className='col'>
+            {mounted && <Calendar />}
+          </div>
         </div>
-      </main>
+      </div>
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
+      <Footer />
+
+      <style jsx>
+        {`
+          .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto;
+          }
+          @media (min-width: 576px) {
+            .container {
+              max-width: 540px;
+            }
+          }
+          @media (min-width: 768px) {
+            .container {
+              max-width: 720px;
+            }
+          }
+          @media (min-width: 992px) {
+            .container {
+              max-width: 960px;
+            }
+          }
+          @media (min-width: 1200px) {
+            .container {
+              max-width: 1140px;
+            }
+          }
+
+          .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+          }
+
+          .col {
+            position: relative;
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            flex-basis: 0;
+            flex-grow: 1;
+            max-width: 100%;
+          }
+        `}
+      </style>
+    </Page>
   )
 }
