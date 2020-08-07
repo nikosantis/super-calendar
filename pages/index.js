@@ -3,6 +3,7 @@ import Page from '../components/page'
 import Calendar from '../components/calendar'
 import useMounted from '../components/use-mounted'
 import Footer from '../components/footer'
+import PreCalendar from '../components/pre-calendar'
 
 export default function Home () {
   const mounted = useMounted()
@@ -15,7 +16,7 @@ export default function Home () {
         </Head>
         <div className='row'>
           <div className='col'>
-            {mounted && <Calendar />}
+            {mounted ? <Calendar /> : <PreCalendar />}
           </div>
         </div>
       </div>
