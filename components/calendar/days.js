@@ -4,6 +4,7 @@ import CalendarTimeZones from './time-zones'
 
 export default function CalendarDays ({ view, datetime, setDatetime }) {
   const days = viewOfDays(datetime, view)
+
   return (
     <div className='days'>
       <CalendarTimeZones datetime={datetime} />

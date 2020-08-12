@@ -16,6 +16,7 @@ export default function Footer () {
           p {
             color: var(--atteend-primary-bg);
             font-size: 0.875rem;
+            margin: 0;
           }
         `}
       </style>

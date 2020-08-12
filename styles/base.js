@@ -20,6 +20,7 @@ export default css.global`
     --atteend-day-header-height: 50px;
     --atteend-day-height: calc(calc(100vw - 40px) / 21);
     --atteend-highlight: #fefae3;
+    --ateend-holiday-bg: #8fdf82;
 
     /* Fonts */
     --font-family-sans-serif: "Roboto", -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",

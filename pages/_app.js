@@ -1,10 +1,10 @@
+import '../styles/bootstrap.css'
 import baseStyles from '../styles/base'
 import fonts from '../styles/fonts'
-import { CalendarProvider } from '../components/calendar-context'
 
 function MyApp ({ Component, pageProps }) {
   return (
-    <CalendarProvider>
+    <>
       <Component {...pageProps} />
       <style jsx global>
         {fonts}
@@ -12,7 +12,7 @@ function MyApp ({ Component, pageProps }) {
       <style jsx global>
         {baseStyles}
       </style>
-    </CalendarProvider>
+    </>
   )
 }
 

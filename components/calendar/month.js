@@ -1,8 +1,10 @@
 import { DateTime } from 'luxon'
 import cx from 'classnames'
 import { viewOfDays } from '../../lib/era'
+import DayEvents from './day-events'
+import DayHoliday from './day-holiday'
 
-export default function CalendarMonth ({ datetime, setDatetime }) {
+export default function CalendarMonth ({ datetime, setDatetime, holidays, events }) {
   const days = viewOfDays(datetime, 'month')
   return (
     <div className='month'>
@@ -12,11 +14,10 @@ export default function CalendarMonth ({ datetime, setDatetime }) {
           const isToday = day.contains(DateTime.local())
           const isActive = day.contains(datetime)
 
-          const gridColumn = index === 0 ? (weekday === 7 ? 0 : weekday + 1) : undefined
+          const isHoliday = holidays.some(holiday => day.contains(DateTime.fromISO(holiday.date)))
+          const holidayDate = isHoliday && holidays.filter(holiday => DateTime.fromISO(holiday.date).ts === day.start.ts)
 
-          function handleDayClick (dt) {
-            return () => setDatetime(dt)
-          }
+          const gridColumn = index === 0 ? (weekday === 1 ? 0 : weekday + 1) : undefined
 
           return (
             <Day
@@ -26,8 +27,10 @@ export default function CalendarMonth ({ datetime, setDatetime }) {
               gridColumn={gridColumn}
               isActive={isActive}
               isToday={isToday}
-              onClick={handleDayClick(day.start)}
               weekday={weekday}
+              events={events}
+              isHoliday={isHoliday}
+              holidayDate={holidayDate}
             />
           )
         })}
@@ -47,6 +50,7 @@ export default function CalendarMonth ({ datetime, setDatetime }) {
             font-size: 12px;
             flex: 1;
             border-collapse: collapse;
+            border-right: 1px solid var(--atteend-primary-border);
           }
         `}
       </style>
@@ -54,9 +58,9 @@ export default function CalendarMonth ({ datetime, setDatetime }) {
   )
 }
 
-function Day ({ day, datetime, onClick, gridColumn, isToday, isActive, weekday }) {
+function Day ({ day, datetime, onClick, gridColumn, isToday, isActive, weekday, isHoliday, holidayDate, events }) {
   return (
-    <button
+    <div
       className='day'
       onClick={onClick}
     >
@@ -65,7 +69,7 @@ function Day ({ day, datetime, onClick, gridColumn, isToday, isActive, weekday }
           'decoration-today': isToday,
           'decoration-active': isActive,
           'decoration-weekday': weekday > 5,
-          'decoration-padded-month': day.start.moth !== datetime.month
+          'decoration-padded-month': day.start.month !== datetime.month
         })
       }
       >
@@ -81,6 +85,9 @@ function Day ({ day, datetime, onClick, gridColumn, isToday, isActive, weekday }
         </span>
       </span>
 
+      <DayEvents datetime={datetime} events={events} />
+      <DayHoliday datetime={datetime} isHoliday={isHoliday} holidayDate={holidayDate} />
+
       <style jsx>
         {`
           .day {
@@ -89,13 +96,12 @@ function Day ({ day, datetime, onClick, gridColumn, isToday, isActive, weekday }
             font-weight: 500;
             display: flex;
             padding: 4px;
-            cursor: pointer;
             position: relative;
             user-select: none;
             position: relative;
             border-left: 1px solid var(--atteend-primary-border);
             border-bottom: 1px solid var(--atteend-primary-border);
-            ${gridColumn && `grid-column: ${gridColumn};`}
+            ${gridColumn ? `grid-column: ${gridColumn};` : ''}
 
             &:focus {
               z-index: 1;
@@ -156,6 +162,6 @@ function Day ({ day, datetime, onClick, gridColumn, isToday, isActive, weekday }
           }
         `}
       </style>
-    </button>
+    </div>
   )
 }

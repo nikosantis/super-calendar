@@ -1,5 +1,6 @@
-import { DateTime, Interval, Duration } from 'luxon'
-import { useCalendarState, useCalendarDispatch } from '../calendar-context'
+import { useCalendarState, useCalendarDispatch } from '../../lib/calendar-context'
+import { useHolidaysState } from '../../lib/holidays-context'
+import { useEventsState } from '../../lib/events-context'
 import CalendarMonth from './month'
 import CalendarDays from './days'
 import CalendarHeader from './header'
@@ -7,6 +8,8 @@ import CalendarYear from './year'
 
 export default function Calendar () {
   const { view, datetime, interval } = useCalendarState()
+  const holidays = useHolidaysState()
+  const events = useEventsState()
   const set = useCalendarDispatch()
 
   return (
@@ -26,7 +29,7 @@ export default function Calendar () {
           />
         )}
         {view === 'month' && (
-          <CalendarMonth datetime={datetime} setDatetime={set.datetime} />
+          <CalendarMonth datetime={datetime} setDatetime={set.datetime} holidays={holidays} events={events} />
         )}
         {view === 'year' && (
           <CalendarYear datetime={datetime} setDatetime={set.datetime} />

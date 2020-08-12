@@ -3,7 +3,7 @@ import { today } from '../../lib/era'
 import ButtonGroup from '../button-group'
 import ButtonGroupOption from '../button-options'
 
-export default function CalendarNav ({ view, datetime, setDatetime }) {
+export default function WorkCalendarNav ({ view, datetime, setDatetime }) {
   function prev () {
     setDatetime(datetime.minus({ [view]: 1 }))
   }
